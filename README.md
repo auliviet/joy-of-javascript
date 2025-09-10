@@ -12,3 +12,9 @@ List of projects and exercises completed as part of the [Joy of JavaScript](http
 Minimal landing page for an agency focusing on the flow-layout and box-model.
 
 - [Source code](/CSS%20for%20JavaScript/huckleberry)
+
+### Character Creator
+
+Responsive character creator using CSS positioning.
+
+- [Source code](/CSS%20for%20JavaScript/character-creator)
