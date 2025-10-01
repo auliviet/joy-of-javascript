@@ -4,6 +4,7 @@
 *.local
 **/.DS_Store
 **/node_modules
+**/.vite
 .vscode/*
 !.vscode/extensions.json
 
