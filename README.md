@@ -7,6 +7,12 @@ List of projects and exercises completed as part of the [Joy of JavaScript](http
 
 ## Selected projects
 
+### Components library
+
+Sets of React components created using styled-components.
+
+- [Source code](/CSS%20for%20JavaScript/mini-component-library)
+
 ### Huckleberry Agency Website
 
 Minimal landing page for an agency focusing on the flow-layout and box-model.
