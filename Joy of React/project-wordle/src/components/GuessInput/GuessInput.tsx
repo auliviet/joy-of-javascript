@@ -1,12 +1,16 @@
 import { useState } from "react";
 
-export default function GuessInput() {
+export default function GuessInput({
+  handleGuesses,
+}: {
+  handleGuesses: (guess: string) => void;
+}) {
   const [guess, setGuess] = useState("");
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
+    handleGuesses(guess);
     setGuess("");
-    console.log(guess);
   }
 
   return (
