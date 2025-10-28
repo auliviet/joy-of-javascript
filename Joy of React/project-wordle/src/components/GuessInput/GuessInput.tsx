@@ -2,8 +2,10 @@ import { useState } from "react";
 
 export default function GuessInput({
   handleGuesses,
+  disable,
 }: {
   handleGuesses: (guess: string) => void;
+  disable: boolean;
 }) {
   const [guess, setGuess] = useState("");
 
@@ -23,6 +25,7 @@ export default function GuessInput({
         pattern="[a-zA-Z]{5}"
         maxLength={5}
         value={guess}
+        disabled={disable}
         onChange={(event) => {
           setGuess(event.target.value.toUpperCase());
         }}

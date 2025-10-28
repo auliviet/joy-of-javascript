@@ -2,18 +2,21 @@ import { sample } from "../../utils";
 import { WORDS } from "../../data";
 import GuessInput from "../GuessInput";
 import GuessResults from "../GuessResults";
-import { useState } from "react";
-import EndGameBanner from "../EndGameBanner/EndGameBanner";
+import { HappyBanner, SadBanner } from "../EndGameBanner";
+import { useState, type SetStateAction } from "react";
+import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 
 // Pick a random word on every pageload.
-const answer = sample(WORDS);
+let answer = sample(WORDS);
 // To make debugging easier, we'll log the solution in the console.
 console.info({ answer });
+
+type GameStatus = "running" | "won" | "lost";
 
 function Game() {
   // Keep track of the player's guesses
   const [guesses, setGuesses] = useState<string[]>([]);
-  const [isWin, setIsWin] = useState(false);
+  const [gameStatus, setGameStatus] = useState<GameStatus>("running");
 
   // Handle new guesses and add to the state
   function handleGuesses(guess: string) {
@@ -25,19 +28,42 @@ function Game() {
 
     // Verify if the guess is successful
     if (guess === answer) {
-      setIsWin(true);
+      setGameStatus("won");
+    } else if (nextGuesses.length >= NUM_OF_GUESSES_ALLOWED) {
+      setGameStatus("lost");
     }
+  }
+
+  function handleReset() {
+    const nextGuesses: SetStateAction<string[]> = [];
+
+    // Reset the guesses
+    setGuesses(nextGuesses);
+
+    // Reset the win state
+    setGameStatus("running");
+
+    // Reload the page to ķelect a new word.
+    answer = sample(WORDS);
   }
 
   return (
     <>
       <GuessResults guesses={guesses} answer={answer}></GuessResults>
-      <GuessInput handleGuesses={handleGuesses}></GuessInput>
-      <EndGameBanner
-        attempts={guesses.length}
-        winner={isWin}
-        answer={answer}
-      ></EndGameBanner>
+      <GuessInput
+        handleGuesses={handleGuesses}
+        disable={gameStatus !== "running"}
+      ></GuessInput>
+      {gameStatus === "won" && (
+        <HappyBanner
+          attempts={guesses.length}
+          handleReset={handleReset}
+        ></HappyBanner>
+      )}
+
+      {gameStatus === "lost" && (
+        <SadBanner answer={answer} handleReset={handleReset}></SadBanner>
+      )}
     </>
   );
 }

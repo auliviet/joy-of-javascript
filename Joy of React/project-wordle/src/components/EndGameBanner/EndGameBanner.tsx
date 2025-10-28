@@ -1,40 +1,53 @@
-import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
+import type { MouseEventHandler, ReactElement } from "react";
 
-export default function EndGameBanner({
-  attempts,
-  winner,
-  answer,
+function Banner({
+  status,
+  handleReset,
+  children,
 }: {
-  attempts: number;
-  winner: boolean;
-  answer: string;
+  status: string;
+  handleReset: MouseEventHandler;
+  children: ReactElement;
 }) {
-  if (winner) {
-    return <HappyBanner attempts={attempts}></HappyBanner>;
-  } else if (attempts === NUM_OF_GUESSES_ALLOWED) {
-    return <SadBanner answer={answer}></SadBanner>;
-  } else {
-    return undefined;
-  }
-}
-
-function HappyBanner({ attempts }: { attempts: number }) {
   return (
-    <div className="happy banner">
-      <p>
-        <strong>Congratulations!</strong> Got it in{" "}
-        <strong>{attempts} guesses</strong>.
-      </p>
+    <div className={`${status} banner`}>
+      {children}
+      <button className="reset-button" onClick={handleReset}>
+        Restart
+      </button>
     </div>
   );
 }
 
-function SadBanner({ answer }: { answer: string }) {
+export function HappyBanner({
+  attempts,
+  handleReset,
+}: {
+  attempts: number;
+  handleReset: MouseEventHandler;
+}) {
   return (
-    <div className="sad banner">
+    <Banner status="happy" handleReset={handleReset}>
+      <p>
+        <strong>Congratulations!</strong> Got it in{" "}
+        <strong>{attempts} guesses</strong>.
+      </p>
+    </Banner>
+  );
+}
+
+export function SadBanner({
+  answer,
+  handleReset,
+}: {
+  answer: string;
+  handleReset: MouseEventHandler;
+}) {
+  return (
+    <Banner status="sad" handleReset={handleReset}>
       <p>
         Sorry, the correct answer is <strong>{answer}</strong>.
       </p>
-    </div>
+    </Banner>
   );
 }

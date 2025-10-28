@@ -230,3 +230,19 @@ h1 {
     transform: translateY(0%);
   }
 }
+
+.reset-button {
+  margin-top: 1rem;
+  padding: 1rem 2rem;
+  border-radius: 4px;
+  background-color: var(--color-gray-900);
+  color: var(--color-gray-100);
+  text-transform: uppercase;
+  font-weight: bold;
+  transition: background-color 200ms, color 200ms;
+
+  &:hover {
+    background-color: #fff;
+    color: var(--color-gray-300);
+  }
+}
