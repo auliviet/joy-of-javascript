@@ -5,6 +5,7 @@ import GuessResults from "../GuessResults";
 import { HappyBanner, SadBanner } from "../EndGameBanner";
 import { useState, type SetStateAction } from "react";
 import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
+import Keyboard from "../Keyboard";
 
 // Pick a random word on every pageload.
 let answer = sample(WORDS);
@@ -54,6 +55,7 @@ function Game() {
         handleGuesses={handleGuesses}
         disable={gameStatus !== "running"}
       ></GuessInput>
+      <Keyboard guess={guesses[guesses.length - 1]} answer={answer}></Keyboard>
       {gameStatus === "won" && (
         <HappyBanner
           attempts={guesses.length}
